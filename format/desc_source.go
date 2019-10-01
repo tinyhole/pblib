@@ -216,6 +216,10 @@ type serverSource struct {
 	client *grpcreflect.Client
 }
 
+func (ss serverSource) GetFiles() map[string]*desc.FileDescriptor {
+	return nil
+}
+
 func (ss serverSource) ListServices() ([]string, error) {
 	svcs, err := ss.client.ListServices()
 	return svcs, reflectionSupport(err)

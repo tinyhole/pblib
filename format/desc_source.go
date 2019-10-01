@@ -34,6 +34,8 @@ type DescriptorSource interface {
 	FindSymbol(fullyQualifiedName string) (desc.Descriptor, error)
 	// AllExtensionsForType returns all known extension fields that extend the given message type name.
 	AllExtensionsForType(typeName string) ([]*desc.FieldDescriptor, error)
+	// Files
+	GetFiles() map[string]*desc.FileDescriptor
 }
 
 // DescriptorSourceFromProtoSets creates a DescriptorSource that is backed by the named files, whose contents
@@ -150,6 +152,10 @@ type fileSource struct {
 	files  map[string]*desc.FileDescriptor
 	er     *dynamic.ExtensionRegistry
 	erInit sync.Once
+}
+
+func (fs *fileSource) GetFiles() map[string]*desc.FileDescriptor {
+	return fs.files
 }
 
 func (fs *fileSource) ListServices() ([]string, error) {

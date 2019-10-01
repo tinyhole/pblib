@@ -63,6 +63,10 @@ type FileDescriptor struct {
 	sourceInfoRecomputeFunc
 }
 
+func (fd *FileDescriptor) GetProto() *dpb.FileDescriptorProto {
+	return fd.proto
+}
+
 func (fd *FileDescriptor) recomputeSourceInfo() {
 	internal.PopulateSourceInfoMap(fd.proto, fd.sourceInfo)
 }
@@ -306,6 +310,10 @@ func createMessageDescriptor(fd *FileDescriptor, parent Descriptor, enclosing st
 		ret.fields[1].GetNumber() == 2
 
 	return ret, msgName
+}
+
+func (md *MessageDescriptor) GetProto() *dpb.DescriptorProto {
+	return md.proto
 }
 
 func (md *MessageDescriptor) resolve(path []int32, scopes []scope) error {
